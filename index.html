@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>contact us</title>
+</head>
+
+<body>
+
+    <center>
+        <h4 class="sent-notification"></h4>
+
+        <form id="myForm">
+            <h2>Contact Us</h2>
+
+            <label>Name</label>
+            <input id="name" type="text" placeholder="Enter Name">
+            <br><br>
+
+            <label>Email</label>
+            <input id="email" type="text" placeholder="Enter Email">
+
+            <label>Company Nmae</label>
+            <input id="company" type="text" placeholder="Company Name">
+
+            <label>Where did ypu herar</label>
+            <input id="message" type="text" placeholder="answer">
+
+            <label>Contact</label>
+            <input id="contact" type="text" placeholder="contact number">
+            <br><br>
+            <button type="button" value="Send An Email" id="submit-btn">Submit</button>
+            <!-- <input type="submit"> -->
+        </form>
+        <!-- <div id='response'></div> -->
+    </center>
+
+    <!-- java Script -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#submit-btn").on("click", function (e) {
+                e.preventDefault();
+                //function sendEmail() {
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var company = $("#company").val();
+                var contact = $("#contact").val();
+                var message = $("#message").val();
+
+                $.ajax(
+                    {
+                        url: 'sendEMail.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data:
+                        {
+                            name: name,
+                            email: email,
+                            company: company,
+                            contact: contact,
+                            message: message
+                        }, success: function (response) {
+                            console.log(response);
+                            $('#myForm')[0].reset();
+                            $('.sent-notification').text("Message Sent Successfully.");
+                        }, error: function () {
+                            console.log("some Error in server side....");
+                        }
+
+                    }
+                );
+
+            });
+        });
+
+        /* $("#submit-btn").on('click', function (e) {
+             e.preventDefault();
+             var formData = new FormData();
+             var name = $("#name").val();
+             formData.append('name', name);
+
+             // ajax
+             $.ajax({
+                 url: 'sendEMail.php',
+                 type: 'POST',
+                 data: formData,
+                 cache: false,
+                 contentType: false,
+                 processData: false,
+                 dataType: "JSON",
+                 success: function (response) {
+                     console.log(response);
+                 },
+                 error: function () {
+                     console.log("Some error on server side");
+                 }
+             });
+         })*/
+    </script>
+</body>
+
+</html>
